@@ -1,0 +1,22 @@
+package com.gestion_prestamos;
+
+import org.junit.jupiter.api.Test;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.test.context.SpringBootTest;
+
+import com.gestion_prestamos.entity.User;
+import com.gestion_prestamos.repository.UserRepository;
+
+@SpringBootTest
+class GestionPrestamosApplicationTests {
+
+	@Autowired
+	private UserRepository repo;
+	
+	@Test
+	void contextLoads() {
+		User user = repo.findById(1).get();
+		repo.findByIdGrupo( user.getId() ).forEach(x -> System.out.println(x));
+	}
+
+}
