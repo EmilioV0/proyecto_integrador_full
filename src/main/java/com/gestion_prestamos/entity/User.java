@@ -177,6 +177,10 @@ public class User {
 	public String getDNI() {
 		return DNI;
 	}
+	
+	public void setDNI(String DNI) {
+		this.DNI = DNI ;
+	}
 
 	@Override
 	public String toString() {

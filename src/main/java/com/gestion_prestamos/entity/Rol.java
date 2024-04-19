@@ -25,12 +25,12 @@ public class Rol {
 		this.id = id;
 	}
 
-	public String getDescription() {
+	public String getName() {
 		return name;
 	}
 
-	public void setDescription(String description) {
-		this.name = description;
+	public void setName(String name) {
+		this.name = name;
 	}
 
 }
