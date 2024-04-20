@@ -54,12 +54,12 @@
                    </tr>
                </thead>
                <tbody>
-                   <tr th:each="row:${empleados}">
+                   <tr th:each="row:${cliente}">
                        <!--el simbolo $ es para recuperar del controller ...row es un objeto de Medicamento-->
                        <td th:text="${row.id}"></td>
                        <td th:text="${row.nombre}"></td>
                        <td th:text="${row.apellido}"></td>
-                       <td th:text="${row.rol.nombreRol}"></td>
+                       <td th:text="${row.id_rol.name}"></td>
                        <td th:text="${row.DNI}"></td>
                        <td th:text="${row.telefono}"></td>
                        <td th:text="${row.email}"></td>
