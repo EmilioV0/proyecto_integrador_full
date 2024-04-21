@@ -9,12 +9,14 @@ public class UserCreate {
 	private String email;
 	private String telefono;
 	private Integer idZona;
+	private Integer bossId;
+	private Integer bossRolId;
 
 	public UserCreate() {
 	}
 
 	public UserCreate(String dNI, String nombre, String apellido, String login, String password, String email,
-			String telefono, Integer idZona) {
+			String telefono, Integer idZona, Integer bossId, Integer bossRolId) {
 		DNI = dNI;
 		this.nombre = nombre;
 		this.apellido = apellido;
@@ -23,8 +25,11 @@ public class UserCreate {
 		this.email = email;
 		this.telefono = telefono;
 		this.idZona = idZona;
+		this.bossId = bossId;
+		this.bossRolId = bossRolId;
 	}
 
+	
 	public String getDNI() {
 		return DNI;
 	}
@@ -87,5 +92,21 @@ public class UserCreate {
 
 	public void setIdZona(Integer idZona) {
 		this.idZona = idZona;
+	}
+
+	public Integer getBossId() {
+		return bossId;
+	}
+
+	public void setBossId(Integer bossId) {
+		this.bossId = bossId;
+	}
+
+	public Integer getBossRolId() {
+		return bossRolId;
+	}
+
+	public void setBossRolId(Integer bossRolId) {
+		this.bossRolId = bossRolId;
 	}
 }

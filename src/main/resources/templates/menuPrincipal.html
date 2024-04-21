@@ -21,7 +21,9 @@
                         <ul>
                             <li><a href="#" >Menu Principal</a></li>
                             <li><a href="#" >Nosotros</a></li>
-                            <li><a href="#" >Cerrar Seccion</a></li>
+                            <li><form method="post" th:action="@{/logout}"> 
+								<input type="submit" class="btn btn-success" value="Cerrar sesión">
+					  </form></li>
                         </ul>
                     </nav>
                 </div>
@@ -34,7 +36,7 @@
        <h3 class="text-center mt-4">LISTA DE EMPLEADOS</h3>
    <div class="btn-nuevo">
        <button type="button" class="btn btn-primary mt-5" data-toggle="modal" data-target="#modalEmpleado" id="btn-nuevo">
-           <i class="far fa-file"></i> Nuevo empleado
+           <i class="far fa-file"></i> Nuevo Subordinado
        </button>
    </div>
        <div class=" mt-2">
@@ -43,26 +45,26 @@
                <thead>
                    <tr>
                        <th>Id</th>
+                       <th>DNI</th>
                        <th>Nombre</th>
                        <th>Apellido</th>
-                       <th>IdRol</th> 
-                       <th>Dni</th> 
-                       <th>Telefono</th>
-                       <th>Email</th>  
+                       <th>Rol</th> 
+                       <th>telefono</th> 
+                       <th>Username</th>  
                        <th></th>
                        <th></th>
                    </tr>
                </thead>
                <tbody>
-                   <tr th:each="row:${empleados}">
+                   <tr th:each="row:${users}">
                        <!--el simbolo $ es para recuperar del controller ...row es un objeto de Medicamento-->
                        <td th:text="${row.id}"></td>
+                       <td th:text="${row.DNI}"></td>
                        <td th:text="${row.nombre}"></td>
                        <td th:text="${row.apellido}"></td>
-                       <td th:text="${row.rol.nombreRol}"></td>
-                       <td th:text="${row.DNI}"></td>
+                       <td th:text="${row.rol}"></td>
                        <td th:text="${row.telefono}"></td>
-                       <td th:text="${row.email}"></td>
+                       <td th:text="${row.username}"></td>
                        <td><a class="btn btn-info btn-editar" data-toggle="modal" data-target="#modalEmpleado"><i
                                    class="far fa-edit"></i></a></td>
                        <td><a class="btn btn-danger btn-eliminar"><i class="far fa-trash-alt"></i></a></td>
@@ -79,9 +81,13 @@
                <h4 class="modal-title text-white">Empleado</h4>
            </div>
            <div class="modal-body">
-               <form method="POST" id="idRegistra" action="grabar">
+               <form method="POST" id="idRegistra" th:action="@{/users}">
                    <!-- cambia el hidden-->
                    <input type="text" value="0" name="codigo" id="idCodigo">
+                   <div class="form-group">
+                       <label for="idNombre"><b>DNI</b></label>
+                       <input type="text" class="form-control" id="idDni" placeholder="Ingresar DNI" name="dni">
+                   </div>
                    <div class="form-group">
                        <label for="idNombre"><b>Nombre</b></label>
                        <input type="text" class="form-control" id="idNombre" placeholder="Ingresar nombre" name="nombre">
@@ -91,8 +97,12 @@
                        <input type="text" class="form-control" id="idApellido" placeholder="Ingresar apellido" name="apellido">
                    </div>
                    <div class="form-group">
-                       <label for="idCargo"><b>Cargo</b></label>
-                       <input type="text" class="form-control" id="idCargo" placeholder="Ingresar cargo" name="cargo">
+                       <label for="idCargo"><b>Login</b></label>
+                       <input type="text" class="form-control" id="idLogin" placeholder="Ingresar login" name="login">
+                   </div>
+                   <div class="form-group">
+                       <label for="idTelefono"><b>Password</b></label>
+                       <input type="password" class="form-control" id="idPassword" placeholder="Ingresar teléfono" name="password">
                    </div>
                    <div class="form-group">
                        <label for="idTelefono"><b>Teléfono</b></label>
@@ -103,10 +113,9 @@
                        <input type="text" class="form-control" id="idCorreo" placeholder="Ingresar correo" name="correo">
                    </div>
                    <div class="form-group">
-                       <label for="idSede"><b>Sede</b></label>
-                       <select class="form-control" id="idSede" name="sede">
-                           <option value="">[Seleccione Tipo Sede]</option>
-                           <option th:each="row:${sedes}" th:value="${row.codigo}" th:text="${row.nombre}" />
+                       <label for="idZona"><b>idZona</b></label>
+                       <select class="form-control" id="idZona" name="zona">
+                           <option th:each="row:${zonas}" th:value="${row.id}" th:text="${row.nombre}" />
                        </select>
                    </div>
                    <div class="col-md-12 text-center mt-4">
@@ -171,17 +180,18 @@
            //almacenar el còdigo del medicamento segun el botòn editar que se seleccionò
            cod=$(this).parents("tr").find("td")[0].innerHTML;
            //funciòn get de JQUERY
-           $.get("buscar?codigo="+cod,function(response){
+           $.get("/users/"+cod,function(response){
                //asignar valores a las cajas usando el atributo "ID"
            
                
-               $("#idCodigo").val(response.codigo);
+               $("#idCodigo").val(response.id);
+               $("#idDni").val(response.dni);
                $("#idNombre").val(response.nombre);
                $("#idApellido").val(response.apellido);
-               $("#idCargo").val(response.cargo);
+               $("#idLogin").val(response.login);
                $("#idTelefono").val(response.telefono);
-               $("#idCorreo").val(response.correo);
-               $("#idSede").val(response.sede.codigo);
+               $("#idCorreo").val(response.email);
+               $("#idZona").val(response.idZona);
                
            })
 

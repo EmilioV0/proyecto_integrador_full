@@ -18,6 +18,8 @@ public class UserMapper {
 		user.setEmail( newUser.getEmail() );
 		user.setTelefono( newUser.getTelefono() );
 		user.setIdZona( newUser.getIdZona() );
+		user.setIdGrupo( newUser.getBossId() );
+		user.setIdRol( newUser.getBossRolId() + 1);
 		
 		return user;
 	}

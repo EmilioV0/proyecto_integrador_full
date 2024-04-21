@@ -17,7 +17,7 @@ public interface UserRepository extends Repository<User, Integer> {
 	@Query(value = """
 			SELECT new com.gestion_prestamos.dto.UserList(
 				u.id,
-				u.DNI,
+				u.dni,
 				u.nombre,
 				u.apellido,
 				u.rol.name as role,
@@ -28,14 +28,15 @@ public interface UserRepository extends Repository<User, Integer> {
 			AND u.id <> :id
 			""")
 	List<UserList> findByIdGrupo(int id);
-	
+	/*
 	@Query(value = """
 			SELECT new com.gestion_prestamos.dto.UserAuthenticationDTO(
+				u.id,
 				r.name as rol,
 				u.password
 			) FROM User u INNER JOIN u.rol r WHERE u.login = :username 
-			""")
-	Optional<UserAuthenticationDTO> findByLogin(String username);
+			""")*/
+	Optional<User> findByLogin(String username);
 	User save(User user);
 	
 	@Query("select p from RolEnlace rp join rp.enlace p where rp.rol.name=:desRol")
