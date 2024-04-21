@@ -2,6 +2,8 @@ package com.gestion_prestamos.entity;
 
 import java.util.List;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.FetchType;
@@ -20,7 +22,7 @@ public class User {
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Integer id;
-	private String DNI;
+	private String dni;
 	private String nombre;
 	private String apellido;
 	private String login;
@@ -37,10 +39,12 @@ public class User {
 	@Column(name = "id_zona")
 	private Integer idZona;
 
+	@JsonIgnore
 	@OneToOne(fetch = FetchType.LAZY)
 	@JoinColumn(name = "id_rol", insertable = false, updatable = false, referencedColumnName = "id")
 	private Rol rol; 
 	
+	@JsonIgnore
 	@OneToMany
 	@JoinColumn(name = "id_grupo", insertable = false, updatable = false, referencedColumnName = "id")
 	private List<User> subordinados;
@@ -55,7 +59,7 @@ public class User {
 			String telefono, Integer idRol, Integer idGrupo, Integer idZona, Rol rol, List<User> subordinados,
 			Zona zona) {
 		this.id = id;
-		DNI = dNI;
+		this.dni = dNI;
 		this.nombre = nombre;
 		this.apellido = apellido;
 		this.login = login;
@@ -175,16 +179,16 @@ public class User {
 	}
 
 	public String getDNI() {
-		return DNI;
+		return dni;
 	}
 	
 	public void setDNI(String DNI) {
-		this.DNI = DNI ;
+		this.dni = DNI ;
 	}
 
 	@Override
 	public String toString() {
-		return "User [id=" + id + ", DNI=" + DNI + ", nombre=" + nombre + ", apellido=" + apellido + ", login=" + login
+		return "User [id=" + id + ", DNI=" + dni + ", nombre=" + nombre + ", apellido=" + apellido + ", login=" + login
 				+ ", password=" + password + ", email=" + email + ", telefono=" + telefono + ", idRol=" + idRol
 				+ ", idGrupo=" + idGrupo + ", idZona=" + idZona +  "]";
 	}
