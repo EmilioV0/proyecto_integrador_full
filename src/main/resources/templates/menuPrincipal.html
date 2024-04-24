@@ -3,9 +3,77 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
-    <link rel="stylesheet" href="estilo.css">
+	<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
     <title>Document</title>
+	
+	<style type="text/css"> 
+		*{
+		    margin : 0;
+		    padding: 0;
+		    box-sizing: border-box;
+		   
+		    list-style: none;
+		}
+		 
+		body{
+		    background: linear-gradient(
+		        90deg,
+		        rgba(252, 0, 0, 0.87) 25%,
+		        rgb(128, 128, 255)73%);
+		    font-family: Arial, Helvetica, sans-serif;
+		}
+		.container {
+		max-width: 1100px;
+		margin: 0 auto;
+		}
+		.back {
+		    padding: 35px 0;
+		    background-color:#2A394F ;
+		}
+		.menu{
+		    position: absolute;
+		    top: 0;
+		    left: 0;
+		    right: 0;
+		    display: flex;
+		    align-items: center;
+		    justify-content: space-between;
+		    z-index: 1000;
+		}
+		.logo {
+		    font-size: 25px;
+		    color: #1544F9;
+		    font-weight: 800;
+		    text-decoration: none;
+		    text-transform: uppercase;
+		    margin-bottom: 15px
+		}
+		.menu .navbar ul li{
+		    position: relative;
+		    float: left;
+		}
+		.menu .navbar ul li a{
+		    font-size: 18px;
+		    padding: 20px;
+		    color: #FFFFFF;
+		    display: block;
+		    text-decoration: none;
+		}
+		.menu .navbar ul li a:hover{
+		    color: rgba(186, 251, 34, 0.753);
+		}
+		#menu{
+		    display: none;
+		}
+		.menu-icono{
+		    width: 50px;
+		}
+		.menu label {
+		    cursor: pointer;
+		    display: none;
+		}
+	</style>
+	
 </head>
 <body>
 
@@ -21,7 +89,9 @@
                         <ul>
                             <li><a href="#" >Menu Principal</a></li>
                             <li><a href="#" >Nosotros</a></li>
-                            <li><a href="#" >Cerrar Seccion</a></li>
+                            <li><form method="post" th:action="@{/logout}"> 
+								<input type="submit" class="btn btn-success" value="Cerrar sesión">
+					  </form></li>
                         </ul>
                     </nav>
                 </div>
@@ -34,7 +104,7 @@
        <h3 class="text-center mt-4">LISTA DE EMPLEADOS</h3>
    <div class="btn-nuevo">
        <button type="button" class="btn btn-primary mt-5" data-toggle="modal" data-target="#modalEmpleado" id="btn-nuevo">
-           <i class="far fa-file"></i> Nuevo empleado
+           <i class="far fa-file"></i> Nuevo Subordinado
        </button>
    </div>
        <div class=" mt-2">
@@ -43,26 +113,26 @@
                <thead>
                    <tr>
                        <th>Id</th>
+                       <th>DNI</th>
                        <th>Nombre</th>
                        <th>Apellido</th>
-                       <th>IdRol</th> 
-                       <th>Dni</th> 
-                       <th>Telefono</th>
-                       <th>Email</th>  
+                       <th>Rol</th> 
+                       <th>telefono</th> 
+                       <th>Username</th>  
                        <th></th>
                        <th></th>
                    </tr>
                </thead>
                <tbody>
-                   <tr th:each="row:${cliente}">
+                   <tr th:each="row:${users}">
                        <!--el simbolo $ es para recuperar del controller ...row es un objeto de Medicamento-->
                        <td th:text="${row.id}"></td>
+                       <td th:text="${row.DNI}"></td>
                        <td th:text="${row.nombre}"></td>
                        <td th:text="${row.apellido}"></td>
-                       <td th:text="${row.id_rol.name}"></td>
-                       <td th:text="${row.DNI}"></td>
+                       <td th:text="${row.rol}"></td>
                        <td th:text="${row.telefono}"></td>
-                       <td th:text="${row.email}"></td>
+                       <td th:text="${row.username}"></td>
                        <td><a class="btn btn-info btn-editar" data-toggle="modal" data-target="#modalEmpleado"><i
                                    class="far fa-edit"></i></a></td>
                        <td><a class="btn btn-danger btn-eliminar"><i class="far fa-trash-alt"></i></a></td>
@@ -79,9 +149,13 @@
                <h4 class="modal-title text-white">Empleado</h4>
            </div>
            <div class="modal-body">
-               <form method="POST" id="idRegistra" action="grabar">
+               <form method="POST" id="idRegistra" th:action="@{/users}">
                    <!-- cambia el hidden-->
-                   <input type="text" value="0" name="codigo" id="idCodigo">
+                   <input type="hidden" value="0" name="codigo" id="idCodigo">
+                   <div class="form-group">
+                       <label for="idNombre"><b>DNI</b></label>
+                       <input type="text" class="form-control" id="idDni" placeholder="Ingresar DNI" name="dni">
+                   </div>
                    <div class="form-group">
                        <label for="idNombre"><b>Nombre</b></label>
                        <input type="text" class="form-control" id="idNombre" placeholder="Ingresar nombre" name="nombre">
@@ -91,8 +165,12 @@
                        <input type="text" class="form-control" id="idApellido" placeholder="Ingresar apellido" name="apellido">
                    </div>
                    <div class="form-group">
-                       <label for="idCargo"><b>Cargo</b></label>
-                       <input type="text" class="form-control" id="idCargo" placeholder="Ingresar cargo" name="cargo">
+                       <label for="idCargo"><b>Login</b></label>
+                       <input type="text" class="form-control" id="idLogin" placeholder="Ingresar login" name="login">
+                   </div>
+                   <div class="form-group">
+                       <label for="idTelefono"><b>Password</b></label>
+                       <input type="password" class="form-control" id="idPassword" placeholder="Ingresar teléfono" name="password">
                    </div>
                    <div class="form-group">
                        <label for="idTelefono"><b>Teléfono</b></label>
@@ -103,10 +181,9 @@
                        <input type="text" class="form-control" id="idCorreo" placeholder="Ingresar correo" name="correo">
                    </div>
                    <div class="form-group">
-                       <label for="idSede"><b>Sede</b></label>
-                       <select class="form-control" id="idSede" name="sede">
-                           <option value="">[Seleccione Tipo Sede]</option>
-                           <option th:each="row:${sedes}" th:value="${row.codigo}" th:text="${row.nombre}" />
+                       <label for="idZona"><b>idZona</b></label>
+                       <select class="form-control" id="idZona" name="zona">
+                           <option th:each="row:${zonas}" th:value="${row.id}" th:text="${row.nombre}" />
                        </select>
                    </div>
                    <div class="col-md-12 text-center mt-4">
@@ -138,9 +215,7 @@
    <!-- fin index js-->
 
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
-   <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.6.0/dist/js/bootstrap.bundle.min.js"
-       integrity="sha384-Piv4xVNRyMGpqkS2by6br4gNJ7DXjqk09RmUpJ8jgGtD7zP9yug3goQfGII0yAns"
-       crossorigin="anonymous"></script>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous"></script>
    <script src="https://cdn.bootcdn.net/ajax/libs/bootstrap-validator/0.5.3/js/bootstrapValidator.js"></script>
    <script th:src="@{/resources/datepicker/bootstrap-datepicker.js}"></script>
    <script src="https://cdn.datatables.net/1.10.23/js/jquery.dataTables.min.js"></script>
@@ -171,17 +246,18 @@
            //almacenar el còdigo del medicamento segun el botòn editar que se seleccionò
            cod=$(this).parents("tr").find("td")[0].innerHTML;
            //funciòn get de JQUERY
-           $.get("buscar?codigo="+cod,function(response){
+           $.get("/users/"+cod,function(response){
                //asignar valores a las cajas usando el atributo "ID"
            
                
-               $("#idCodigo").val(response.codigo);
+               $("#idCodigo").val(response.id);
+               $("#idDni").val(response.dni);
                $("#idNombre").val(response.nombre);
                $("#idApellido").val(response.apellido);
-               $("#idCargo").val(response.cargo);
+               $("#idLogin").val(response.login);
                $("#idTelefono").val(response.telefono);
-               $("#idCorreo").val(response.correo);
-               $("#idSede").val(response.sede.codigo);
+               $("#idCorreo").val(response.email);
+               $("#idZona").val(response.idZona);
                
            })
 
@@ -288,6 +364,7 @@
            })
        });    
    </script>
+   <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous"></script>
 </body>
-<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous"></script>
+
 </html>

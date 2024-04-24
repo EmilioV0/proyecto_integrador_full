@@ -29,9 +29,19 @@ public class UserServiceImp implements UserService {
 	}
 
 	@Override
-	public void save(UserCreate newUser) {
+	public void save(UserCreate newUser, int id) {
 		User user = UserMapper.toUser(newUser);
-		userRepository.save(user);
+		
+		if ( id != 0 ) {
+			user.setId(id);
+		}
+		
+		try {
+			userRepository.save(user);			
+		} catch(Exception e) {
+			System.out.println("El username ya está en uso");
+			System.out.println(e);
+		}
 	}
 
 	@Override

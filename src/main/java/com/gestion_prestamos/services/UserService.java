@@ -9,7 +9,7 @@ import com.gestion_prestamos.entity.User;
 
 public interface UserService {
 	List<UserList> findByIdGrupo(int idUser);
-	void save(UserCreate newUser);
+	void save(UserCreate newUser, int id);
 	User findById(int id);
 	List<Enlace> traerEnlacesDelUsuario(String desRol);
 }
