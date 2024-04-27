@@ -3,6 +3,7 @@ package com.gestion_prestamos.services;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import com.gestion_prestamos.dto.UserCreate;
@@ -16,9 +17,11 @@ import com.gestion_prestamos.repository.UserRepository;
 public class UserServiceImp implements UserService {
 	
 	private final UserRepository userRepository;
+	private final BCryptPasswordEncoder encriptador;
 	
 	@Autowired
-	public UserServiceImp(UserRepository userRepository) {
+	public UserServiceImp(UserRepository userRepository, BCryptPasswordEncoder encriptador) {
+		this.encriptador = encriptador;
 		this.userRepository = userRepository;
 	}
 
@@ -35,6 +38,8 @@ public class UserServiceImp implements UserService {
 		if ( id != 0 ) {
 			user.setId(id);
 		}
+		
+		user.setPassword( encriptador.encode( user.getPassword() ) );
 		
 		try {
 			userRepository.save(user);			
