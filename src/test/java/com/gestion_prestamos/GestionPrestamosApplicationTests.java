@@ -19,9 +19,9 @@ class GestionPrestamosApplicationTests {
 	 
 	@Test 
 	void contextLoads() {
-		// User user = repo.findById(1).get();
+		 //User user = repo.findById(1).get();
 		// repo.findByIdGrupo( user.getId() ).forEach(x -> System.out.println(x));
-		// System.out.println( by.encode("emilio") );
+		 System.out.println( by.encode("emilio") );
 		// System.out.println( repo.findByLogin("emiliovo").get() );
 	}
 
