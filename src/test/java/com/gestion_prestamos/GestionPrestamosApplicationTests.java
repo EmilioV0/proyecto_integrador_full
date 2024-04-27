@@ -16,8 +16,8 @@ class GestionPrestamosApplicationTests {
 	
 	@Autowired
 	private BCryptPasswordEncoder by;
-	
-	@Test
+	 
+	@Test 
 	void contextLoads() {
 		// User user = repo.findById(1).get();
 		// repo.findByIdGrupo( user.getId() ).forEach(x -> System.out.println(x));
