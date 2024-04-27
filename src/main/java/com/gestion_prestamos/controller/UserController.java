@@ -39,7 +39,7 @@ public class UserController {
 	
 	@GetMapping
 	public String getUsers(HttpSession session, Model model) {		
-		this.userLoguedo = (User) session.getAttribute("userSession");
+		UserController.userLoguedo = (User) session.getAttribute("userSession");
 		List<UserList> users = userService.findByIdGrupo(userLoguedo.getId());
 		List<Zona> zonas = zonaService.findAll();
 		
@@ -64,7 +64,7 @@ public class UserController {
 	) {
 		UserCreate newUser = new UserCreate(
 			dni, nombre, apellido, login, password, email,telefono, idZona,
-			this.userLoguedo.getId(), this.userLoguedo.getIdRol()
+			UserController.userLoguedo.getId(), UserController.userLoguedo.getIdRol()
 		);
 
 		userService.save(newUser, id);

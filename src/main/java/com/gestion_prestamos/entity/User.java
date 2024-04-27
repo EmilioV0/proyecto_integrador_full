@@ -193,5 +193,6 @@ public class User {
 				+ ", idGrupo=" + idGrupo + ", idZona=" + idZona +  "]";
 	}
 	
+
 	
 }
