@@ -18,6 +18,9 @@ public class WebSecurityConfig {
 	@Bean
 	public BCryptPasswordEncoder encriptarClave(){
 		return new BCryptPasswordEncoder();
+		
+	 
+		
 	}
 	
 	@Bean
@@ -52,6 +55,13 @@ public class WebSecurityConfig {
 		
 		return configure;
 	}
-	
+/*
+	public static void main(String[] args) {
+        String rawPassword = "emiliovo"; // La contraseña sin codificar
+        BCryptPasswordEncoder encoder = new BCryptPasswordEncoder();
+        String encodedPassword = encoder.encode(rawPassword); // Codificar la contraseña
+        System.out.println("Contraseña codificada: " + encodedPassword);
+    }
+	*/
 	
 }

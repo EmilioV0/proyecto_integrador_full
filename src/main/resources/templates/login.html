@@ -35,13 +35,13 @@
   <div class="container">
     <div class="row justify-content-center" style="margin-top: 300px!important">
       <div class="col-lg-4 col-md-6 col-sm-6">
-		  <div class="alert alert-danger" th:if="${param.error}">Credenciales erróneas</div>
-		<div class="alert alert-success" th:if="${param.logout}">Sesión terminada</div>
+        <div class="alert alert-danger" th:if="${param.error}">Credenciales erróneas</div>
+        <div class="alert alert-success" th:if="${param.logout}">Sesión terminada</div>
         <div class="card shadow">
           <div class="card-title text-center border-bottom">
             <h2 class="p-3">INTRANET</h2>
           </div>
-          <div class="card-body">
+          <div class="card-body" id="session">
             <form method="post" th:action="@{/session/login}">
               <div class="mb-4">
                 <label for="username" class="form-label font-weight-bold">Username/Email</label>
@@ -54,17 +54,227 @@
               <div class="d-grid">
                 <button type="submit" class="btn text-light main-bg">Login</button>
               </div>
+              
+              <!-- Botón para abrir el modal de Prestatario -->
+              <div class="btn-nuevo">
+                <button type="button" class="btn btn-primary mt-5" data-bs-toggle="modal" data-bs-target="#modalPrestatario" id="btn-nuevo">
+                  <i class="far fa-file"></i>Register here
+                </button>
+              </div>
+                       
+              
+              <!-- Modal de Prestatario -->
+          
+              <div class="modal fade" id="modalPrestatario" data-bs-backdrop="static" 
+                   data-bs-keyboard="false" tabindex="-1" 
+                   aria-labelledby="exampleModalLabel" aria-hidden="true">
+                <div class="modal-dialog modal-dialog-centered modal-login modal-lg" >                    
+                  <div class="modal-content">
+                    <div class="modal-header bg-blue-darker text-center">
+    					<h4 class="modal-title text-dark mx-auto">REGISTRO DE PRESTATARIO</h4>
+					</div>
+                    
+                    <div class="modal-body">
+                      <form method="POST" id="idRegistra" action="grabar">	
+									
+										<input type="hidden" value="0" name="codigo" id="idCodigo">
+
+										<div class="container">
+											<div class="row">
+												<div class="form-group has-feedback col-md-4">
+													<label for="exampleInputEmail1"><b>DNI</b></label><br>
+													<i class="fas fa-file-signature form-control-feedback2"></i>
+													<input type="text" class="form-control" id="idDni" placeholder="Ingresar dni" name="dni">														
+												</div>
+												<div class="form-group has-feedback col-md-12">
+														<label for="exampleInputEmail1"><b>Nombre</b></label><br>		
+														<i class="fas fa-file-signature form-control-feedback2"></i>	
+														<input type="text" class="form-control"  id="idNombre" placeholder="Ingresar nombre" name="nombre">																										
+												</div>
+												<div class="form-group has-feedback col-md-12">
+														<label for="exampleInputEmail1"><b>Apellido</b></label><br>
+														<i class="fas fa-file-signature form-control-feedback2"></i>	
+														<input type="text" class="form-control"  id="idApellido" placeholder="Ingresar apellido" name="apellido">									
+												</div>
+												<div class="form-group has-feedback col-md-4">
+													<label for="exampleInputEmail1"><b>Login</b></label><br>
+													<i class="fas fa-money-check-alt form-control-feedback2"></i>
+													<input type="text" class="form-control" id="idLogin" placeholder="Ingresar login" name="login">														
+												</div>
+												<div class="form-group has-feedback col-md-4">
+													<label for="exampleInputEmail1"><b>Password</b></label><br>
+													<i class="fas fa-money-check-alt form-control-feedback2"></i>
+													<input type="text" class="form-control" id="idPassword" placeholder="Ingresar password" name="password">														
+												</div>
+												<div class="form-group has-feedback col-md-4">
+													<label for="exampleInputEmail1"><b>Teléfono</b></label><br>
+													<i class="fas fa-money-check-alt form-control-feedback2"></i>
+													<input type="text" class="form-control" id="idTelefono" placeholder="Ingresar teléfono" name="telefono">														
+												</div>
+												<div class="form-group has-feedback col-md-4">
+													<label for="exampleInputEmail1"><b>Correo</b></label><br>
+													<i class="fas fa-money-check-alt form-control-feedback2"></i>
+													<input type="text" class="form-control" id="idCorreo" placeholder="Ingresar correo" name="correo">														
+												</div>
+											
+											    <div class="form-group has-feedback col-md-6">	
+														<label for="exampleInputEmail1"><b>Zona</b></label><br>
+												        <i class="fas fa-prescription-bottle-alt form-control-feedback2"></i>
+													    <select class="form-control" id="idZona" name="zona">
+													      <option value=" ">[Seleccione Zona]</option>
+													      <option th:each="row:${zonas}"
+													                th:value="${row.codigo}"
+													                th:text="${row.nombre}" />
+													    </select>
+													   
+												 </div>
+											</div>
+										</div>								
+										<div class="col-md-12 text-center mt-4"> 										
+											<button type="submit" id="Guardar" class="btn btn-primary"><i class="fas fa-save"></i> Registrar</button>
+											<button type="button" id="btn-cerrar" class="btn btn-danger">
+        											<i class="fas fa-undo-alt"></i> Cancelar
+    										</button>
+
+										</div> 																								
+									</form>
+                                                                                                                     
+                      </form>
+                    </div>
+                    
+                    
+                    
+                  </div>
+                </div>
+              </div>
             </form>
           </div>
         </div>
       </div>
     </div>
   </div>
-  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.bundle.min.js"></script>
+  
+  <!-- FIN Modal MEDICAMENTO-->
+     <!-- index js-->
+<script type="text/javascript">
+   $(document).ready(function(){
+       //jquery for toggle sub menus
+       $('.sub-btn').click(function(){
+           $(this).next('.sub-menu').slideToggle();
+           $(this).find('.dropdown').toggleClass('rotate');
+       });
+
+   });
+</script>
+ <!-- fin index js-->
+
+   <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous"></script>
+<script src="https://cdn.bootcdn.net/ajax/libs/bootstrap-validator/0.5.3/js/bootstrapValidator.js"></script>
+<script th:src="@{/resources/datepicker/bootstrap-datepicker.js}"></script>
+<script src="https://cdn.datatables.net/1.10.23/js/jquery.dataTables.min.js"></script>
+<script src="https://cdn.datatables.net/1.10.23/js/dataTables.bootstrap4.min.js"></script>
+<script src="https://kit.fontawesome.com/08aaa156fb.js" crossorigin="anonymous"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.js"></script>
+<script th:src="@{/resources/alertifyjs/alertify.js}"></script>
+<script th:src="@{/resources/alertifyjs/alertify.min.js}"></script>
+
+<script th:inline="javascript" th:if="${MENSAJE!=null}">
+   //leer atributo MENSAJE
+   let msj = /*[[${MENSAJE}]]*/
+
+       toastr.success(msj, toastr.options = {
+           "timeOut": "2000",
+           "positionClass ": " toast-top-right ",
+       });
+</script>
+  
+     
+<script>
+//asignar evento click al botòn con id "btn-cerrar"
+       $(document).on("click", "#btn-cerrar",function(){
+           //resetear el formulario
+           $("#idRegistra").trigger("reset");
+           //resetear validacion
+           $("#idRegistra").data("bootstrapValidator").resetForm(true);
+           
+       })
+</script>
+  
+ <script type="text/javascript"> 
+	$(document).ready(function () {
+
+           $('#idRegistra').bootstrapValidator({
+               feedbackIcons: {
+                   valid: 'glyphicon glyphicon-ok',
+                   invalid: 'glyphicon glyphicon-remove',
+                   validating: 'glyphicon glyphicon-refresh'
+               },
+               fields: {
+
+                   Dni: {
+                       selector: '#idDni',
+                       validators: {
+                           notEmpty: {
+                               message: 'Ingrese DNI'
+                           }
+                       }
+                   },
+                   Nombres: {
+                       selector: '#idNombre',
+                       validators: {
+                           notEmpty: {
+                               message: 'Ingrese nombre'
+                           }
+                       }
+                   },
+                   Apellidos: {
+                       selector: '#idApellido',
+                       validators: {
+                           notEmpty: {
+                               message: 'Ingrese apellido'
+                           }
+                       }
+                   },
+                   Login: {
+                       selector: '#idLogin',
+                       validators: {
+                           notEmpty: {
+                               message: 'Ingrese login'
+                           }
+                       }
+                   },
+                   Password: {
+                       selector: '#idPassword',
+                       validators: {
+                           notEmpty: {
+                               message: 'Ingrese password'
+                           }
+                       }
+                   },
+                   Telefono: {
+                       selector: '#idTelefono',
+                       validators: {
+                           notEmpty: {
+                               message: 'Ingrese teléfono'
+                           }
+                       }
+                   },
+                   Correo: {
+                       selector: '#idCorreo',
+                       validators: {
+                           notEmpty: {
+                               message: 'Ingrese correo'
+                           }
+                       }
+                   }
+               }
+           });
+       });
+
+  </script>
   
 </body>
-
-</html>
-
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous"></script>
 
 </html>
