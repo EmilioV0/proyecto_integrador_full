@@ -28,8 +28,7 @@ public class WebSecurityConfig {
 		http
 			.authorizeHttpRequests((requests) -> requests
 				.requestMatchers("/session/**","resources/**").permitAll()
-				.requestMatchers("/users/**")
-				.authenticated()
+				.anyRequest().authenticated()
 			)
 			.formLogin((form) -> form
 				.loginPage("/session/login")
