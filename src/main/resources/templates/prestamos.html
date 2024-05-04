@@ -189,20 +189,21 @@ a{
     guardarButton.addEventListener('click', function() {
         const monto = parseFloat(document.getElementById('monto').textContent.replace("S/", "").trim());
         const fechaInicio = document.getElementById('fechaInicioInput').value;
-        const fechaFin = document.getElementById('fechaFinLabel').textContent;
+        const fechaFin = document.getElementById('fechaFinLabel').textContent.trim();
+        console.log(fechaFin)
         const dias = parseInt(document.getElementById('idLoginLabel').textContent);
         const pagoDiario = parseFloat(document.getElementById('pagoDiario').textContent.replace("Pago Diario: S/", "").trim());
 
         // Envío de datos al backend mediante AJAX
         $.ajax({
-            url: '/url_del_backend',
-            method: 'http://localhost:8090/aqui se veee la rutaaaaaaaaaa',
+            url: '/prestamos',
+            method: 'POST',
             data: JSON.stringify({
                 monto: monto,
                 fechaInicio: fechaInicio,
                 fechaFin: fechaFin,
                 dias: dias,
-                pagoDiario: pagoDiario.toFixed(2) // Redondea el pago diario a dos decimales
+                pagoPorDia: pagoDiario.toFixed(2) // Redondea el pago diario a dos decimales
             }),
             contentType: 'application/json',
             success: function(response) {

@@ -1,21 +1,22 @@
 package com.gestion_prestamos.controller;
 
-import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
-import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.ResponseBody;
 
+import com.gestion_prestamos.dto.CrearPrestamoDTO;
+import com.gestion_prestamos.entity.Prestamo;
 import com.gestion_prestamos.entity.User;
-import com.gestion_prestamos.entity.prestamos;
 import com.gestion_prestamos.services.PrestamosService;
 
 import jakarta.servlet.http.HttpSession;
 
 @Controller
-@RequestMapping("/api")
+@RequestMapping("/prestamos")
 public class PrestamoController {
 	
 	@Autowired
@@ -23,14 +24,12 @@ public class PrestamoController {
 	
 	private static User userLoguedo;
 	
-	
-	@GetMapping
-	public String GetPrestamo(HttpSession session, Model model) {
+	@PostMapping
+	@ResponseBody
+	public Prestamo save(@RequestBody CrearPrestamoDTO nuevoPrestamo, HttpSession session) {
 		PrestamoController.userLoguedo = (User) session.getAttribute("userSession");
-		List<prestamos> prestamo = prestamoSer.findAll();
-		model.addAttribute("prestamo",prestamo);
-		
-		return "SE ve la pagina para el get";
+		Prestamo prestamo = prestamoSer.save(nuevoPrestamo, userLoguedo);	
+		return prestamo;
 	}
 	
 	
