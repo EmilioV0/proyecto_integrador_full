@@ -100,7 +100,7 @@ a{
             <tbody>
                 <tr th:each="row:${intereses}">
 					<td th:each="cell:${row}">
-						<a  class="" data-toggle="modal" data-target="#modalEmpleado" id="btn-nuevo" th:text="${cell}"></a>
+						<a  class="btn-nuevo" data-toggle="modal" data-target="#modalEmpleado" id="btn-nuevo" th:text="${cell}"></a>
 					</td>
 				</tr>
             </tbody>
@@ -111,14 +111,14 @@ a{
         <div class="modal-dialog modal-dialog-centered modal-lg">
             <div class="modal-content">
                 <div class="modal-header bg-blue-darker">
-                    <h4 class="modal-title text-white">Empleado</h4>
+                    <h4 class="modal-title text-black">Empleado</h4>
                 </div>
                 <div class="modal-body">
                     <form id="idRegistra">
                         <!-- cambia el hidden-->
                         <input type="hidden" value="0" name="codigo" id="idCodigo">
                         <div class="form-group">
-                            <label for="idNombre"><b>Monto : </b></label>
+                            <label for="idNombre"><b>Monto : S/</b></label>
                             <LAbel id="monto"></LAbel>
                         </div>
 
@@ -138,14 +138,14 @@ a{
 
 
                         <div class="form-group">
-                            <label for="idCargo"><b>Dias</b></label>
+                            <label for="idCargo"><b>Dias : </b></label>
                             <label id="idLoginLabel"></label>
                         </div>
 
 
 
                         <div class="form-group">
-                            <label for="idTelefono"><b>Pago Diario</b></label>
+                            <label for="idTelefono"><b>Pago Diario : S/</b></label>
                             <label id="pagoDiario"><b></b></label>
                         </div>
                         <div class="col-md-12 text-center mt-4">
@@ -158,6 +158,28 @@ a{
         </div>
     </div>
 
+	<script>
+		document.addEventListener("DOMContentLoaded", function() {
+		    // Captura el evento clic en los enlaces de la tabla
+		    document.querySelectorAll('#tableMedicamentos .btn-nuevo').forEach(function(enlace) {
+		        enlace.addEventListener('click', function(evento) {
+		            evento.preventDefault(); // Evita que se siga el enlace
+		
+		            // Obtiene el valor del precio desde el texto del enlace
+		            var monto = this.textContent.trim();
+		
+		            // Actualiza el valor del campo 'Monto' en el modal con el precio capturado
+		            document.getElementById('monto').textContent = monto;
+		
+		            // Abre el modal
+		            $('#modalEmpleado').modal('show');
+		        });
+		    });
+		});
+
+	</script>
+	
+	
 
     <!-- postt en formulario -->
     <script>
@@ -267,15 +289,12 @@ a{
             var fechaFin = document.getElementById("fechaFinLabel").innerText;
             var pagoDiario = document.getElementById("pagoDiario").innerText;
             var dias = document.getElementById("idLoginLabel").innerText;
-           var pago = document.getElementById('pagoDiario').innerHTML;
-
             // Imprime la información de los días laborables y la información de los días de la tabla en la consola
             console.log("Monto:", monto);
             console.log("Fecha de inicio:", fechaInicio);
             console.log("Fecha de fin:", fechaFin);
             console.log("Pago diario:", pagoDiario);
             console.log("Días:", dias);
-            console.log("Pago Diario:", pago);
         });
 
         // Oculta el modal "Empleado" inicialmente
