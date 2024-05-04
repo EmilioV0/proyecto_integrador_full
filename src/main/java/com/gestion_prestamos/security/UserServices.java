@@ -12,10 +12,8 @@ import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.web.context.request.RequestContextHolder;
 import org.springframework.web.context.request.ServletRequestAttributes;
 
-import com.gestion_prestamos.dto.UserAuthenticationDTO;
 import com.gestion_prestamos.entity.User;
 import com.gestion_prestamos.repository.UserRepository;
-import com.gestion_prestamos.services.UserService;
 
 import jakarta.servlet.http.HttpSession;
 import jakarta.transaction.Transactional;
