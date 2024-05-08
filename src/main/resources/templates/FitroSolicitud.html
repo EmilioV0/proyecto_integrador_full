@@ -1,0 +1,269 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <!-- Enlaces a Bootstrap y jQuery -->
+ <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+
+
+
+    <title>Solicitud del Prestatario</title>
+    <!-- Agrega aquí tus estilos CSS -->
+    <style>
+        /* Aquí puedes agregar estilos CSS */
+    </style>
+</head>
+<body>
+    <div class="container mt-5">
+        <h1 class="mb-4">Solicitud del Prestatario</h1>
+
+        <!-- Formulario de filtro -->
+        <form id="filterForm" class="mb-4">
+            <div class="row">
+                <div class="col-md-4">
+                    <label for="nombre" class="form-label">Nombre Prestatario:</label>
+                    <input type="text" id="nombre" name="nombre" class="form-control">
+                </div>
+                <div class="col-md-4">
+                    <label for="fechaDesde" class="form-label">Fecha de Solicitud (Desde):</label>
+                    <input type="date" id="fechaDesde" name="fechaDesde" class="form-control">
+                </div>
+                <div class="col-md-4">
+                    <label for="fechaHasta" class="form-label">Fecha de Solicitud (Hasta):</label>
+                    <input type="date" id="fechaHasta" name="fechaHasta" class="form-control">
+                </div>
+            </div>
+            <button type="submit" class="btn btn-success mt-3">Filtrar</button>
+        </form>
+
+        <!-- Tabla para mostrar los resultados -->
+        <table id="resultados" class="table">
+            <thead>
+                <tr>
+                    <th>ID</th>
+                    <th>Nombre Prestatario</th>
+                    <th>Cantidad</th>
+                    <th>Días</th>
+                    <th>Pago Diario</th>
+                    <th>Fecha Inicio</th>
+                    <th>Fecha Fin</th>
+                    <th></th>
+                </tr>
+            </thead>
+            <tbody>
+                <!-- esta parte se modifica a la par del back -->
+                <tr th:each="row:${prestamos}">
+                    <td th:text="${row.id}"></td>
+                    <!-- nombre del prestatario -->
+                    <td th:text="${row.NombrePrestatario}"></td>
+                    <td th:text="${row.Cantidad a Pagar}"></td>
+                    <td th:text="${row.Dias}"></td>
+                    <td th:text="${row.PagoDiario}"></td>
+                    <td th:text="${row.FechaInicio}"></td>
+                    <td th:text="${row.FechaFin}"></td>
+                    <td><a class="btn btn-primary btn-ver" href="#"data-bs-toggle="modal" data-bs-target="#informacionModal" onmouseover="toggleIcon(this)" onmouseout="toggleIcon(this)"><i class="far fa-eye"></i></a></td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+<!-- Modal -->
+<div class="modal fade" id="informacionModal" tabindex="-1" aria-labelledby="informacionModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="informacionModalLabel">Información General</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <!-- Contenido del modal -->
+                <div class="mb-3">
+                    <label for="nombreLabel" class="form-label">Nombre Prestatario:</label>
+                    <label id="nombreLabel">Nombre de prueba</label>
+                </div>
+                <div class="mb-3">
+                    <label for="cantidadLabel" class="form-label">Cantidad:</label>
+                    <label id="cantidadLabel">1000</label>
+                </div>
+                <div class="mb-3">
+                    <label for="diasLabel" class="form-label">Días:</label>
+                    <label id="diasLabel">30</label>
+                </div>
+                <div class="mb-3">
+                    <label for="pagoDiarioLabel" class="form-label">Pago Diario:</label>
+                    <label id="pagoDiarioLabel">50</label>
+                </div>
+                <div class="mb-3">
+                    <label for="fechaInicio" class="form-label">Fecha Inicio:</label>
+                    <label id="fechaInicio">2022-01-01</label>
+                </div>
+                <div class="mb-3">
+                    <label for="fechaFin" class="form-label">Fecha Fin:</label>
+                    <label id="fechaFin">2022-01-30</label>
+                </div>
+                <div class="mb-3">
+                    <label for="tazaLabel" class="form-label">Taza:</label>
+                    <label id="tazaLabel">10%</label>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-success btn-lg me-2" id="aceptarBtn" data-bs-dismiss="modal">Aceptar</button>
+                <button type="button" class="btn btn-danger btn-lg mx-2" id="cancelarBtn" data-bs-dismiss="modal">Cancelar</button>
+            </div>
+        </div>
+    </div>
+</div>
+  <!-- Scripts de Bootstrap y JavaScript -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/2.4.0/umd/popper.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.min.js"></script>
+  <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+
+
+
+<script>
+    $(document).ready(function () {
+        $('#aceptarBtn').on('click', function () {
+            enviarDatos('A');
+        });
+
+        $('#cancelarBtn').on('click', function () {
+            enviarDatos('C');
+        });
+
+        function enviarDatos(estado) {
+            var estado = estado;
+
+            // Datos a enviar al backend
+            var estado = {
+                estado: estado
+            };
+            console.log('Datos enviados al backend:', estado); 
+
+            // Envío de datos al backend mediante AJAX
+            $.ajax({
+                url: '/prestamos',
+                method: 'PUT',
+                data: JSON.stringify({
+                    estado: estado
+                }),
+                contentType: 'application/json',
+                success: function(response) {
+                    // Manejo de la respuesta del backend
+                    console.log('Datos enviados al backend con éxito:', response);
+                },
+                error: function(xhr, status, error) {
+                    // Manejo de errores
+                    console.error('Error al enviar datos al backend:', error);
+                }
+            });
+        }
+    });
+</script>
+
+
+
+
+
+<!-- aqui recupera los datos de la fila -->
+<script>
+    document.querySelectorAll('.btn-ver').forEach(button => {
+        button.addEventListener('click', function() {
+            // Obtener los datos de la fila correspondiente
+            var row = this.closest('tr');
+            var nombre = row.cells[1].innerText;
+            var cantidad = row.cells[2].innerText;
+            var dias = row.cells[3].innerText;
+            var pagoDiario = row.cells[4].innerText;
+            var fechaInicio = row.cells[5].innerText;
+            var fechaFin = row.cells[6].innerText;
+
+            // Colocar los datos en el modal
+            document.getElementById('nombreLabel').innerText = nombre;
+            document.getElementById('cantidadLabel').innerText = cantidad;
+            document.getElementById('diasLabel').innerText = dias;
+            document.getElementById('pagoDiarioLabel').innerText = pagoDiario;
+            document.getElementById('fechaInicio').innerText = pagoDiario;
+            document.getElementById('fechaFin').innerText = pagoDiario;
+        });
+    });
+</script>
+
+<!-- Se cambia la forma de ojo  -->
+    <script>
+        function toggleIcon(element) {
+        var icon = element.querySelector('i');
+        if (icon.classList.contains('far')) {
+            icon.classList.remove('far', 'fa-eye');
+            icon.classList.add('fas', 'fa-eye');
+        } else {
+            icon.classList.remove('fas', 'fa-eye');
+            icon.classList.add('far', 'fa-eye');
+        }
+    }
+    </script>
+    
+
+
+    <script>
+        $(document).ready(function() {
+            $('#filterForm').submit(function(event) {
+                event.preventDefault(); // Evita que el formulario se envíe normalmente
+    
+                // Obtenemos los valores de los campos de filtro
+                var nombre = $('#nombre').val();
+                var fechaDesde = $('#fechaDesde').val();
+                var fechaHasta = $('#fechaHasta').val();
+    
+                // Imprimimos los datos que enviaremos al backend en la consola
+                console.log('Datos enviados al backend:', { nombre, fechaDesde, fechaHasta });
+    
+                // Construimos el objeto de datos a enviar al backend
+                var dataToSend = {
+                    nombre: nombre,
+                    fechaDesde: fechaDesde,
+                    fechaHasta: fechaHasta
+                };
+    
+                // Realizamos la solicitud AJAX al backend
+                $.ajax({
+                    type: 'GET',
+                    url: '/endpoint', // URL del endpoint en tu backend
+                    data: dataToSend,
+                    dataType: 'json',
+                    success: function(data) {
+                        // Limpiamos la tabla de resultados
+                        $('#resultados tbody').empty();
+    
+                        // Mostramos los resultados en la tabla
+                        $.each(data, function(index, resultado) {
+                            $('#resultados tbody').append(`
+                                <tr>
+                                    <td>${resultado.id}</td>
+                                    <td>${resultado.nombre}</td>
+                                    <td>${resultado.cantidad}</td>
+                                    <td>${resultado.dias}</td>
+                                    <td>${resultado.pagoDiario}</td>
+                                </tr>
+                            `);
+                        });
+                    },
+                    contentType: 'application/json',
+                        success: function(response) {
+                            // Manejo de la respuesta del backend
+                            console.log('Datos enviados al backend con éxito:', response);
+                        },
+                        error: function(xhr, status, error) {
+                            // Manejo de errores
+                            console.error('Error al enviar datos al backend:', error);
+                        }
+                });
+            });
+        });
+    </script>
+     <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/2.11.6/umd/popper.min.js"></script>
+     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.min.js"></script>
+</body>
+</html>
