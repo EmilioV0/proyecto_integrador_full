@@ -121,26 +121,22 @@ a{
 	<hr>
 	<br>
 	<table class="table table-striped table-bordered mt-5" id="tablePrestamo">
-	    <h1>Prestamos</h1>
+	    <h1>Solicitudes de Prestamos</h1>
 	    <thead>
 	        <tr>
 	            <th>Id</th>
-	            <th>Dias</th>
 	            <th>Fecha de Inicio</th>
-	            <th>Fecha de Fin</th>
-	            <th>Nombre Prestatario</th> 
+	            <th>Monto</th>
 	            <th>Estado</th> 
 	        </tr>
 	    </thead>
 	    <tbody>
-	        <tr th:each="row:${prestamos}">
+	        <tr th:each="row:${solicitudesPrestamos}">
 	            <!--el simbolo $ es para recuperar del controller ...row es un objeto de Medicamento-->
 	            <td th:text="${row.id}"></td>
-	            <td th:text="${row.dias}"></td>
-	            <td th:text="${row.fecha_inicio}"></td>
-	            <td th:text="${row.fecha_fin}"></td>
-	            <td th:text="${row.id_prestatario = aqui se puede poner direccion hasta el nombre}"></td>
-	            <th th:text="${row.estado == 'P' ? 'Pendiente' : (row.estado == 'C' ? 'Cancelado' : (row.estado == 'A' ? 'Aprobado' : row.estado))}" th:class="${row.estado == 'P' ? 'yellow-bg' : (row.estado == 'A' ? 'purple-bg' : (row.estado == 'C' ? 'pink-bg' : ''))}"></th>
+	            <td th:text="${row.fechaInicio}"></td>
+	            <td th:text="${row.monto}"></td>
+	            <th th:text="${row.estado}" th:class="${row.estado == 'Pendiente' ? 'yellow-bg' : (row.estado == 'Aprobado' ? 'purple-bg' : (row.estado == 'Cancelado' ? 'pink-bg' : ''))}"></th>
 	        </tr>
 	    </tbody>
 	</table>

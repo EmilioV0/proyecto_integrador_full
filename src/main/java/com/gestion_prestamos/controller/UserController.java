@@ -45,8 +45,11 @@ public class UserController {
 
 		model.addAttribute("users", users);
 		model.addAttribute("zonas", zonas);
+		
+		boolean esPrestamista = UserController.userLoguedo.getIdRol() == 3;
+		String page = esPrestamista ? "prestamista" : "menuPrincipal";
 
-		return "menuPrincipal";
+		return page;
 	}
 
 	@PostMapping

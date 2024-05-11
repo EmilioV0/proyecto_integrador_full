@@ -102,10 +102,13 @@
     <!-- ============= Home Section =============== -->
    <div class="container">
                
-       <h3 class="text-center mt-4">LISTA DE SUBORDINADOS</h3>
+       <h3 class="text-center mt-4">LISTA DE PRESTATARIOS</h3>
    <div class="btn-nuevo">
        <button type="button" class="btn btn-primary mt-5" data-toggle="modal" data-target="#modalEmpleado" id="btn-nuevo">
-           <i class="far fa-file"></i> Nuevo Subordinado
+           <i class="far fa-file"></i> Nuevo Prestatario
+       </button>
+       <button type="button" class="btn btn-primary mt-5">
+          <a th:href="@{/prestamistas/solicitudes-de-prestamos}">Ver solicitudes de prestamo</a>
        </button>
    </div>
        <div class=" mt-2">
@@ -136,7 +139,7 @@
                        <td th:text="${row.username}"></td>
                        <td><a class="btn btn-info btn-editar" data-toggle="modal" data-target="#modalEmpleado"><i
                                    class="far fa-edit"></i></a></td>
-                       <td sec:authorize="hasRole('jefe_prestamista')"><a class="btn btn-danger btn-eliminar"><i class="far fa-trash-alt"></i></a></td>
+                       <td><a class="btn btn-danger btn-eliminar"><i class="far fa-trash-alt"></i></a></td>
                    </tr>
                </tbody>
            </table>

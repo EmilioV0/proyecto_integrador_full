@@ -3,16 +3,16 @@ package com.gestion_prestamos.mapper;
 import java.time.LocalDateTime;
 
 import com.gestion_prestamos.dto.CrearPrestamoDTO;
-import com.gestion_prestamos.entity.Prestamo;
+import com.gestion_prestamos.entity.SolicitudPrestamo;
 import com.gestion_prestamos.entity.User;
 
 public class PrestamoMapper {
 
-	private static final Prestamo prestamo = new Prestamo();
+	private static final SolicitudPrestamo prestamo = new SolicitudPrestamo();
 
 	private PrestamoMapper() {}
 
-	public static Prestamo toPrestamo(CrearPrestamoDTO nuevoPrestamo,
+	public static SolicitudPrestamo toPrestamo(CrearPrestamoDTO nuevoPrestamo,
 										User user) {
 
 		LocalDateTime fechaInicio = LocalDateTime.now();

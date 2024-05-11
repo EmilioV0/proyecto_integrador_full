@@ -45,12 +45,9 @@
             <thead>
                 <tr>
                     <th>ID</th>
-                    <th>Nombre Prestatario</th>
-                    <th>Cantidad</th>
-                    <th>Días</th>
-                    <th>Pago Diario</th>
+                    <th>Prestatario</th>
                     <th>Fecha Inicio</th>
-                    <th>Fecha Fin</th>
+                    <th>Monto</th>
                     <th></th>
                 </tr>
             </thead>
@@ -59,14 +56,11 @@
                 <tr th:each="row:${prestamos}">
                     <td th:text="${row.id}"></td>
                     <!-- nombre del prestatario -->
-                    <td th:text="${row.NombrePrestatario}"></td>
-                    <td th:text="${row.Cantidad a Pagar}"></td>
-                    <td th:text="${row.Dias}"></td>
-                    <td th:text="${row.PagoDiario}"></td>
+                    <td th:text="${row.prestatario}"></td>
                     <td th:text="${row.FechaInicio}"></td>
-                    <td th:text="${row.FechaFin}"></td>
-                    <td><a class="btn btn-primary btn-ver" href="#"data-bs-toggle="modal" data-bs-target="#informacionModal" onmouseover="toggleIcon(this)" onmouseout="toggleIcon(this)"><i class="far fa-eye"></i></a></td>
-                </tr>
+                    <td th:text="${row.monto}"></td>
+                 	<td><a class="btn btn-primary btn-ver" href="#"data-bs-toggle="modal" data-bs-target="#informacionModal" onmouseover="toggleIcon(this)" onmouseout="toggleIcon(this)"><i class="far fa-eye"></i></a></td>
+                 </tr>
             </tbody>
         </table>
     </div>
@@ -208,6 +202,29 @@
 
 
     <script>
+		$(document).on('click', ".btn-editar", function () {
+           //variable
+           var cod;
+           //almacenar el còdigo del medicamento segun el botòn editar que se seleccionò
+           cod=$(this).parents("tr").find("td")[0].innerHTML;
+           //funciòn get de JQUERY
+           $.get("/solicitudes-prestamos/"+cod,function(response){
+               //asignar valores a las cajas usando el atributo "ID"
+           
+               
+               $("#idCodigo").val(response.id);
+               $("#idDni").val(response.dni);
+               $("#idNombre").val(response.nombre);
+               $("#idApellido").val(response.apellido);
+               $("#idLogin").val(response.login);
+               $("#idTelefono").val(response.telefono);
+               $("#idCorreo").val(response.email);
+               $("#idZona").val(response.idZona);
+               
+           })
+
+       })
+		
         $(document).ready(function() {
             $('#filterForm').submit(function(event) {
                 event.preventDefault(); // Evita que el formulario se envíe normalmente
@@ -230,35 +247,32 @@
                 // Realizamos la solicitud AJAX al backend
                 $.ajax({
                     type: 'GET',
-                    url: '/endpoint', // URL del endpoint en tu backend
-                    data: dataToSend,
+                    url: '/prestamos?fechaInicio=' + fechaDesde + '&fechaFin=' + fechaHasta + '&text=' + nombre, // URL del endpoint en tu backend
                     dataType: 'json',
-                    success: function(data) {
-                        // Limpiamos la tabla de resultados
+                    contentType: 'application/json',
+                    success: function(response) {
+                        // Manejo de la respuesta del backend
                         $('#resultados tbody').empty();
-    
-                        // Mostramos los resultados en la tabla
-                        $.each(data, function(index, resultado) {
+
+                    	// Mostramos los resultados en la tabla
+                        $.each(response, function(index, resultado) {
                             $('#resultados tbody').append(`
                                 <tr>
                                     <td>${resultado.id}</td>
-                                    <td>${resultado.nombre}</td>
-                                    <td>${resultado.cantidad}</td>
-                                    <td>${resultado.dias}</td>
-                                    <td>${resultado.pagoDiario}</td>
+                                    <td>${resultado.prestatario}</td>
+                                    <td>${resultado.fechaInicio}</td>
+                                    <td>${resultado.monto}</td>
+                                    <td><a class="btn btn-primary btn-ver" href="#"data-bs-toggle="modal" data-bs-target="#informacionModal" onmouseover="toggleIcon(this)" onmouseout="toggleIcon(this)"><i class="far fa-eye"></i></a></td>
                                 </tr>
                             `);
                         });
+                        
+                        console.log('Datos enviados al backend con éxito:', response);
                     },
-                    contentType: 'application/json',
-                        success: function(response) {
-                            // Manejo de la respuesta del backend
-                            console.log('Datos enviados al backend con éxito:', response);
-                        },
-                        error: function(xhr, status, error) {
-                            // Manejo de errores
-                            console.error('Error al enviar datos al backend:', error);
-                        }
+                    error: function(xhr, status, error) {
+                        // Manejo de errores
+                        console.error('Error al enviar datos al backend:', error);
+                    }
                 });
             });
         });

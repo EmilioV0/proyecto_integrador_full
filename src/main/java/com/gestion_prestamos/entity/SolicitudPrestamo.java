@@ -11,24 +11,29 @@ import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
 import jakarta.persistence.Table;
+import jakarta.persistence.Temporal;
+import jakarta.persistence.TemporalType;
 
 @Entity
-@Table(name = "prestamos")
-public class Prestamo {
+@Table(name = "solicitudes_prestamos")
+public class SolicitudPrestamo {
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Integer id;
 
 	private BigDecimal monto;
-	private LocalDateTime fechaInicio;
-	private LocalDateTime fechaFin;
 	private Integer dias;
+	private String estado;
+	
+	@Temporal(TemporalType.TIMESTAMP)
+	private LocalDateTime fechaInicio;
+	
+	@Temporal(TemporalType.TIMESTAMP)
+	private LocalDateTime fechaFin;
 
 	@Column(columnDefinition = "decimal(10, 2)")
 	private BigDecimal pagoDiario;
-
-	private String estado;
 
 	@Column(name = "id_prestatario")
 	private Integer idPrestatario;
