@@ -19,8 +19,8 @@ public class PrestamosServiceImp implements PrestamosService {
 
 	@Override
 	public List<Prestamo> findAll() {
-		
-		return (List<Prestamo>) prestamoRepo.findAll();
+
+		return prestamoRepo.findAll();
 	}
 
 	@Override
@@ -43,6 +43,6 @@ public class PrestamosServiceImp implements PrestamosService {
 	public List<PrestamoResumenDTO> buscarTodosPorPrestatario(int idPrestatario) {
 		return prestamoRepo.buscarTodosPorPrestatario(idPrestatario);
 	}
-	
+
 
 }

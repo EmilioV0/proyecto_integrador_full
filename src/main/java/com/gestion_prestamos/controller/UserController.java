@@ -25,30 +25,30 @@ import jakarta.servlet.http.HttpSession;
 @Controller
 @RequestMapping("/users")
 public class UserController {
-	
+
 	private final UserService userService;
 	private final ZonaService zonaService;
 	private static User userLoguedo;
-	
-	
+
+
 	@Autowired
 	public UserController(UserService userService, ZonaService zonaService) {
 		this.userService = userService;
 		this.zonaService = zonaService;
 	}
-	
+
 	@GetMapping
-	public String getUsers(HttpSession session, Model model) {		
+	public String getUsers(HttpSession session, Model model) {
 		UserController.userLoguedo = (User) session.getAttribute("userSession");
 		List<UserList> users = userService.findByIdGrupo(userLoguedo.getId());
 		List<Zona> zonas = zonaService.findAll();
-		
+
 		model.addAttribute("users", users);
 		model.addAttribute("zonas", zonas);
-		
+
 		return "menuPrincipal";
 	}
-	
+
 	@PostMapping
 	public String save(
 		@RequestParam("codigo") int id,
@@ -71,7 +71,7 @@ public class UserController {
 
 		return "redirect:/users";
 	}
-	
+
 	@GetMapping("/{id}")
 	@ResponseBody
 	public User getUserById(@PathVariable int id) {

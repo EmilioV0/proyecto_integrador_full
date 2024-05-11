@@ -11,7 +11,7 @@ import com.gestion_prestamos.entity.Prestamo;
 
 @Repository
 public interface PrestamoRepository extends JpaRepository<Prestamo, Integer> {
-	
+
 	@Query(value = """
 			SELECT new com.gestion_prestamos.dto.PrestamoResumenDTO
 			(
@@ -23,5 +23,5 @@ public interface PrestamoRepository extends JpaRepository<Prestamo, Integer> {
 			FROM Prestamo p WHERE p.idPrestatario = :idPrestatario
 			""")
 	List<PrestamoResumenDTO> buscarTodosPorPrestatario(Integer idPrestatario);
-	
+
 }

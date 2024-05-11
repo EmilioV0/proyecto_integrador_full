@@ -1,10 +1,7 @@
 package com.gestion_prestamos.entity;
 
 import java.math.BigDecimal;
-import java.sql.Date;
 import java.time.LocalDateTime;
-
-import com.gestion_prestamos.controller.PrestatarioController;
 
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
@@ -22,22 +19,22 @@ public class Prestamo {
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Integer id;
-	
+
 	private BigDecimal monto;
 	private LocalDateTime fechaInicio;
 	private LocalDateTime fechaFin;
 	private Integer dias;
-	
+
 	@Column(columnDefinition = "decimal(10, 2)")
 	private BigDecimal pagoDiario;
-	
+
 	private String estado;
-	
+
 	@Column(name = "id_prestatario")
 	private Integer idPrestatario;
-	
+
 	private Integer idPrestamista;
-	
+
 	@ManyToOne
 	@JoinColumn(name = "id_prestatario", insertable = false, updatable = false, referencedColumnName = "id")
 	private User prestatario;
@@ -121,5 +118,5 @@ public class Prestamo {
 	public void setPrestatario(User prestatario) {
 		this.prestatario = prestatario;
 	}
-	
+
 }

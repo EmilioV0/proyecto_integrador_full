@@ -15,12 +15,12 @@ import org.springframework.security.web.SecurityFilterChain;
 
 @EnableWebSecurity
 public class WebSecurityConfig {
-	
+
 	@Bean
 	public BCryptPasswordEncoder encriptarClave(){
 		return new BCryptPasswordEncoder();
 	}
-	
+
 	@Bean
 	public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
 		http
@@ -43,14 +43,14 @@ public class WebSecurityConfig {
 	public UserDetailsService userDetailsService() {
 		return new UserServices();
 	}
-	
+
 	@Bean
 	public AuthenticationProvider authenticationProvider() {
 		DaoAuthenticationProvider configure=new DaoAuthenticationProvider();
-		
+
 		configure.setUserDetailsService(userDetailsService());
 		configure.setPasswordEncoder(encriptarClave());
-		
+
 		return configure;
 	}
 /*
@@ -61,5 +61,5 @@ public class WebSecurityConfig {
         System.out.println("Contraseña codificada: " + encodedPassword);
     }
 	*/
-	
+
 }

@@ -11,7 +11,7 @@ public class TiempoTest {
 
 	@Autowired
 	private TiempoRepository tiempoRepo;
-	
+
 	@Test
 	void diasDisponibles() {
 		for ( String item : tiempoRepo.findAll() ) {

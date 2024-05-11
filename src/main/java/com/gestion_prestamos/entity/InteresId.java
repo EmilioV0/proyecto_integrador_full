@@ -8,7 +8,7 @@ import jakarta.persistence.Embeddable;
 
 @Embeddable
 public class InteresId implements Serializable {
-	
+
 	private static final long serialVersionUID = 6076291259726706100L;
 
 	@Column(name = "id_monto")
@@ -42,13 +42,11 @@ public class InteresId implements Serializable {
 	public boolean equals(Object obj) {
 		if (this == obj)
 			return true;
-		if (obj == null)
-			return false;
-		if (getClass() != obj.getClass())
+		if ((obj == null) || (getClass() != obj.getClass()))
 			return false;
 		InteresId other = (InteresId) obj;
 		return Objects.equals(idMonto, other.idMonto) && Objects.equals(idTiempo, other.idTiempo);
 	}
-	
-	
+
+
 }

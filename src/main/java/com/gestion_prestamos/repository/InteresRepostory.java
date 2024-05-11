@@ -7,13 +7,13 @@ import com.gestion_prestamos.entity.Interes;
 import com.gestion_prestamos.entity.InteresId;
 
 public interface InteresRepostory extends Repository<Interes, InteresId>{
-	
+
 	@Query(value = """
-			SELECT 
+			SELECT
 				group_concat(t.price)
 			FROM Interes t INNER JOIN t.monto m
 			GROUP BY m.id
 			""")
 	String[] getIntereses();
-	
+
 }

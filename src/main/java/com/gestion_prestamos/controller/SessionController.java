@@ -7,9 +7,10 @@ import org.springframework.web.bind.annotation.RequestMapping;
 @Controller
 @RequestMapping(value = "/session")
 public class SessionController {
-	
+
 	@GetMapping(value = "/login")
 	public String login() {
 		return "login";
 	}
+
 }

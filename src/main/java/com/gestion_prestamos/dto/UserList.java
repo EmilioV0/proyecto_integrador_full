@@ -10,7 +10,7 @@ public class UserList {
 	private String username;
 
 	public UserList() {}
-	
+
 	public UserList(Integer id, String dNI, String nombre, String apellido, String rol, String telefono, String username) {
 		this.id = id;
 		DNI = dNI;
@@ -82,7 +82,7 @@ public class UserList {
 		return "UserList [id=" + id + ", DNI=" + DNI + ", nombre=" + nombre + ", apellido=" + apellido + ", rol=" + rol
 				+ ", telefono=" + telefono + ", username=" + username + "]";
 	}
-	
-	
-	
+
+
+
 }

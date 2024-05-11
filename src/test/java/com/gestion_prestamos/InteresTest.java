@@ -8,10 +8,10 @@ import com.gestion_prestamos.repository.InteresRepostory;
 
 @SpringBootTest
 public class InteresTest {
-	
+
 	@Autowired
 	private InteresRepostory interesRepository;
-	
+
 	@Test
 	void getIntereses() {
 		for ( String row : interesRepository.getIntereses() ) {

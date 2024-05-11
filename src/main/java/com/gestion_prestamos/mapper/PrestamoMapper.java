@@ -1,6 +1,5 @@
 package com.gestion_prestamos.mapper;
 
-import java.time.LocalDate;
 import java.time.LocalDateTime;
 
 import com.gestion_prestamos.dto.CrearPrestamoDTO;
@@ -8,16 +7,16 @@ import com.gestion_prestamos.entity.Prestamo;
 import com.gestion_prestamos.entity.User;
 
 public class PrestamoMapper {
-	
+
 	private static final Prestamo prestamo = new Prestamo();
-	
+
 	private PrestamoMapper() {}
 
 	public static Prestamo toPrestamo(CrearPrestamoDTO nuevoPrestamo,
 										User user) {
-		
+
 		LocalDateTime fechaInicio = LocalDateTime.now();
-		
+
 		prestamo.setMonto(nuevoPrestamo.monto());
 		prestamo.setFechaFin( LocalDateTime.parse( nuevoPrestamo.fechaFin() + "T00:00:00") );
 		prestamo.setFechaInicio( fechaInicio );
@@ -26,8 +25,8 @@ public class PrestamoMapper {
 		prestamo.setIdPrestamista( user.getIdGrupo() );
 		prestamo.setIdPrestatario( user.getId() );
 		prestamo.setEstado("Pendiente");
-		
+
 		return prestamo;
 	}
-	
+
 }

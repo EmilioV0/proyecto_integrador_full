@@ -29,7 +29,7 @@ public class UserCreate {
 		this.bossRolId = bossRolId;
 	}
 
-	
+
 	public String getDNI() {
 		return DNI;
 	}

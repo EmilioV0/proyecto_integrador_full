@@ -16,7 +16,7 @@ public class Monto {
 
 	@Column(nullable = false, length = 50, columnDefinition = "decimal(10, 2)")
 	private double price;
-	
+
 	public Integer getId() {
 		return id;
 	}

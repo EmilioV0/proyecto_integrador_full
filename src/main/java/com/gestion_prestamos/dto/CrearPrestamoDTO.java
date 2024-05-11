@@ -9,5 +9,5 @@ public record CrearPrestamoDTO(
     int dias,
     BigDecimal pagoPorDia
 ) {
-	
+
 }

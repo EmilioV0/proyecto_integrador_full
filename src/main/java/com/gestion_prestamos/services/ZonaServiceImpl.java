@@ -11,7 +11,7 @@ import com.gestion_prestamos.repository.ZonaRepository;
 public class ZonaServiceImpl implements ZonaService {
 
 	private final ZonaRepository zonaRepository;
-	
+
 	public ZonaServiceImpl(ZonaRepository zonaRepository) {
 		this.zonaRepository = zonaRepository;
 	}

@@ -15,10 +15,10 @@ import com.gestion_prestamos.repository.UserRepository;
 
 @Service
 public class UserServiceImp implements UserService {
-	
+
 	private final UserRepository userRepository;
 	private final BCryptPasswordEncoder encriptador;
-	
+
 	@Autowired
 	public UserServiceImp(UserRepository userRepository, BCryptPasswordEncoder encriptador) {
 		this.encriptador = encriptador;
@@ -34,15 +34,15 @@ public class UserServiceImp implements UserService {
 	@Override
 	public void save(UserCreate newUser, int id) {
 		User user = UserMapper.toUser(newUser);
-		
+
 		if ( id != 0 ) {
 			user.setId(id);
 		}
-		
+
 		user.setPassword( encriptador.encode( user.getPassword() ) );
-		
+
 		try {
-			userRepository.save(user);			
+			userRepository.save(user);
 		} catch(Exception e) {
 			System.out.println("El username ya está en uso");
 			System.out.println(e);

@@ -18,20 +18,20 @@ import jakarta.servlet.http.HttpSession;
 @Controller
 @RequestMapping("/prestamos")
 public class PrestamoController {
-	
+
 	@Autowired
 	private PrestamosService prestamoSer;
-	
+
 	private static User userLoguedo;
-	
+
 	@PostMapping
 	@ResponseBody
 	public Prestamo save(@RequestBody CrearPrestamoDTO nuevoPrestamo, HttpSession session) {
 		PrestamoController.userLoguedo = (User) session.getAttribute("userSession");
-		Prestamo prestamo = prestamoSer.save(nuevoPrestamo, userLoguedo);	
+		Prestamo prestamo = prestamoSer.save(nuevoPrestamo, userLoguedo);
 		return prestamo;
 	}
-	
-	
-	
+
+
+
 }

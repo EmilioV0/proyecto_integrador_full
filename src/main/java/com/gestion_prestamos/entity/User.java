@@ -32,29 +32,29 @@ public class User {
 
 	@Column(name = "id_rol")
 	private Integer idRol;
-	
+
 	@Column(name = "id_grupo")
 	private Integer idGrupo;
-	
+
 	@Column(name = "id_zona")
 	private Integer idZona;
 
 	@JsonIgnore
 	@OneToOne(fetch = FetchType.LAZY)
 	@JoinColumn(name = "id_rol", insertable = false, updatable = false, referencedColumnName = "id")
-	private Rol rol; 
-	
+	private Rol rol;
+
 	@JsonIgnore
 	@OneToMany
 	@JoinColumn(name = "id_grupo", insertable = false, updatable = false, referencedColumnName = "id")
 	private List<User> subordinados;
-	
+
 	@ManyToOne
 	@JoinColumn(name = "id_zona", insertable = false, updatable = false, referencedColumnName = "id")
 	private Zona zona;
 
 	public User() {}
-	
+
 	public User(Integer id, String dNI, String nombre, String apellido, String login, String password, String email,
 			String telefono, Integer idRol, Integer idGrupo, Integer idZona, Rol rol, List<User> subordinados,
 			Zona zona) {
@@ -181,7 +181,7 @@ public class User {
 	public String getDNI() {
 		return dni;
 	}
-	
+
 	public void setDNI(String DNI) {
 		this.dni = DNI ;
 	}
@@ -192,7 +192,7 @@ public class User {
 				+ ", password=" + password + ", email=" + email + ", telefono=" + telefono + ", idRol=" + idRol
 				+ ", idGrupo=" + idGrupo + ", idZona=" + idZona +  "]";
 	}
-	
 
-	
+
+
 }

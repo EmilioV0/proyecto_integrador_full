@@ -15,11 +15,11 @@ public class Interes {
 
 	@Column( columnDefinition = "decimal(10, 2)" )
 	private double price;
-	
+
 	@ManyToOne
 	@JoinColumn(name = "id_monto", insertable = false, updatable = false, referencedColumnName = "id")
 	private Monto monto;
-	
+
 	@ManyToOne
 	@JoinColumn(name = "id_tiempo", insertable = false, updatable = false, referencedColumnName = "id")
 	private Tiempo tiempo;
@@ -55,5 +55,5 @@ public class Interes {
 	public void setPrice(double price) {
 		this.price = price;
 	}
-	
+
 }

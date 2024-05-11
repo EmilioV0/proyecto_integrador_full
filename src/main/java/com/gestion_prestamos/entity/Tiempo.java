@@ -33,5 +33,5 @@ public class Tiempo {
 	public void setDias(Integer dias) {
 		this.dias = dias;
 	}
-	
+
 }
