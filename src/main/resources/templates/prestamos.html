@@ -36,6 +36,9 @@ table {
     table-layout: fixed;
     border-collapse: collapse;
 }
+#tablePrestamo {
+    margin-top: 20px; /* Ajusta este valor según sea necesario */
+}
 
 thead {
     background: rgba(243, 140, 210, 0.4);
@@ -95,8 +98,8 @@ a{
 
 
 <body>
-    <div class="container">
-        <table class="table table-striped table-bordered mt-5" id="tableMedicamentos">
+    <div class="container mt-5">
+        <table class="table table-striped table-bordered" id="tableMedicamentos">
             <h1>Prestatario : Solicitud de Prestamos</h1>
             <thead>
                 <tr>
@@ -116,34 +119,37 @@ a{
 				</tr>
             </tbody>
         </table>
+		
+		<div class="container">
+			        <table class="table table-striped table-bordered" id="tablePrestamo">
+						<h1>Prestamos</h1>
+							    <thead>
+							        <tr>
+							            <th>Id</th>
+							            <th>Dias</th>
+							            <th>Fecha de Inicio</th>
+							            <th>Fecha de Fin</th>
+							            <th>Nombre Prestatario</th> 
+							            <th>Estado</th> 
+							        </tr>
+							    </thead>
+							    <tbody>
+							        <tr th:each="row:${prestamos}">
+							            <!--el simbolo $ es para recuperar del controller ...row es un objeto de Medicamento-->
+							            <td th:text="${row.id}"></td>
+							            <td th:text="${row.dias}"></td>
+							            <td th:text="${row.fecha_inicio}"></td>
+							            <td th:text="${row.fecha_fin}"></td>
+							            <td th:text="${row.id_prestatario = aqui se puede poner direccion hasta el nombre}"></td>
+							            <th th:text="${row.estado == 'P' ? 'Pendiente' : (row.estado == 'C' ? 'Cancelado' : (row.estado == 'A' ? 'Aprobado' : row.estado))}" th:class="${row.estado == 'P' ? 'yellow-bg' : (row.estado == 'A' ? 'purple-bg' : (row.estado == 'C' ? 'pink-bg' : ''))}"></th>
+							        </tr>
+							    </tbody>
+			        </table>
+			    </div>
     </div>
-	<br>
-	<hr>
-	<br>
-	<table class="table table-striped table-bordered mt-5" id="tablePrestamo">
-	    <h1>Prestamos</h1>
-	    <thead>
-	        <tr>
-	            <th>Id</th>
-	            <th>Dias</th>
-	            <th>Fecha de Inicio</th>
-	            <th>Fecha de Fin</th>
-	            <th>Nombre Prestatario</th> 
-	            <th>Estado</th> 
-	        </tr>
-	    </thead>
-	    <tbody>
-	        <tr th:each="row:${prestamos}">
-	            <!--el simbolo $ es para recuperar del controller ...row es un objeto de Medicamento-->
-	            <td th:text="${row.id}"></td>
-	            <td th:text="${row.dias}"></td>
-	            <td th:text="${row.fecha_inicio}"></td>
-	            <td th:text="${row.fecha_fin}"></td>
-	            <td th:text="${row.id_prestatario = aqui se puede poner direccion hasta el nombre}"></td>
-	            <th th:text="${row.estado == 'P' ? 'Pendiente' : (row.estado == 'C' ? 'Cancelado' : (row.estado == 'A' ? 'Aprobado' : row.estado))}" th:class="${row.estado == 'P' ? 'yellow-bg' : (row.estado == 'A' ? 'purple-bg' : (row.estado == 'C' ? 'pink-bg' : ''))}"></th>
-	        </tr>
-	    </tbody>
-	</table>
+	
+	
+	
     <div
     class="modal fade" id="modalEmpleado" data-backdrop="static" data-keyboard="false" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true" style="display: none;">
         <div class="modal-dialog modal-dialog-centered modal-lg">
