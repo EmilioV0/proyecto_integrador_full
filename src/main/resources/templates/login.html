@@ -117,17 +117,12 @@
 													<input type="text" class="form-control" id="idCorreo" placeholder="Ingresar correo" name="correo">														
 												</div>
 											
-											    <div class="form-group has-feedback col-md-6">	
-														<label for="exampleInputEmail1"><b>Zona</b></label><br>
-												        <i class="fas fa-prescription-bottle-alt form-control-feedback2"></i>
-													    <select class="form-control" id="idZona" name="zona">
-													      <option value=" ">[Seleccione Zona]</option>
-													      <option th:each="row:${zonas}"
-													                th:value="${row.codigo}"
-													                th:text="${row.nombre}" />
-													    </select>
-													   
-												 </div>
+											    <div class="form-group has-feedback col-md-4">
+                       									<label for="idZona"><b>idZona</b></label>
+                       									<select class="form-control" id="idZona" name="zona">
+                           								<option th:each="row:${zonas}" th:value="${row.id}" th:text="${row.nombre}" />
+                       									</select>
+                   								</div>
 											</div>
 										</div>								
 										<div class="col-md-12 text-center mt-4"> 										
