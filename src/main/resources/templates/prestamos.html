@@ -1,0 +1,480 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
+    
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Prestatario</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
+</head>
+
+
+<style type="text/css">
+    * {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: sans-serif;
+}
+
+body {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    min-height: 100vh;
+    background: linear-gradient(#b7328d, #ac18c0);
+}
+
+.container {
+    border: solid 1px rgba(255, 255, 255, 0.2);
+}
+
+table {
+    color: #fff;
+    font-size: 14px;
+    table-layout: fixed;
+    border-collapse: collapse;
+}
+#tablePrestamo {
+    margin-top: 20px; /* Ajusta este valor según sea necesario */
+}
+
+thead {
+    background: rgba(243, 140, 210, 0.4);
+}
+
+th {
+    padding: 20px 15px ;
+    font-weight: 700;
+    text-transform: uppercase;
+}
+
+td {
+    padding: 15px;
+    border-bottom: solid 1px rgba(255, 255, 255, 0.2);
+    background-color: aqua;
+}
+
+
+tbody td {
+    cursor: pointer;
+}
+
+tbody td:hover {
+    background: rgb(255, 2, 2);
+}
+a{
+    text-decoration: none;
+    color: black;
+}
+
+
+/* Estilos opcionales para el icono de calendario */
+.calendar-icon {
+    position: relative;
+}
+.calendar-icon i {
+    position: absolute;
+    right: 10px;
+    top: 50%;
+    transform: translateY(-50%);
+    color: #999;
+    cursor: pointer;
+}
+
+.purple-bg {
+			background-color: rgb(185, 59, 185) !important;
+		}
+		.pink-bg {
+		    background-color: #ff395a !important;
+		}
+		.yellow-bg {
+		    background-color: rgb(249, 249, 76) !important;
+		}
+
+</style> 
+
+
+
+<body>
+    <div class="container mt-5">
+        <table class="table table-striped table-bordered" id="tableMedicamentos">
+            <h1>Prestatario : Solicitud de Prestamos</h1>
+            <thead>
+                <tr>
+                    <th>Días</th>
+                    <th>S/150</th>
+                    <th>S/200</th>
+                    <th>S/300</th>
+                    <th>S/400</th>
+                    <th>S/500</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr th:each="row:${intereses}">
+					<td th:each="cell:${row}">
+						<a  class="btn-nuevo" data-toggle="modal" data-target="#modalEmpleado" id="btn-nuevo" th:text="${cell}"></a>
+					</td>
+				</tr>
+            </tbody>
+        </table>
+		
+		<div class="container">
+			        <table class="table table-striped table-bordered" id="tablePrestamo">
+						<h1>Prestamos</h1>
+							    <thead>
+							        <tr>
+							            <th>Id</th>
+							            <th>Dias</th>
+							            <th>Fecha de Inicio</th>
+							            <th>Fecha de Fin</th>
+							            <th>Nombre Prestatario</th> 
+							            <th>Estado</th> 
+							        </tr>
+							    </thead>
+							    <tbody>
+							        <tr th:each="row:${prestamos}">
+							            <!--el simbolo $ es para recuperar del controller ...row es un objeto de Medicamento-->
+							            <td th:text="${row.id}"></td>
+							            <td th:text="${row.dias}"></td>
+							            <td th:text="${row.fecha_inicio}"></td>
+							            <td th:text="${row.fecha_fin}"></td>
+							            <td th:text="${row.id_prestatario = aqui se puede poner direccion hasta el nombre}"></td>
+							            <th th:text="${row.estado == 'P' ? 'Pendiente' : (row.estado == 'C' ? 'Cancelado' : (row.estado == 'A' ? 'Aprobado' : row.estado))}" th:class="${row.estado == 'P' ? 'yellow-bg' : (row.estado == 'A' ? 'purple-bg' : (row.estado == 'C' ? 'pink-bg' : ''))}"></th>
+							        </tr>
+							    </tbody>
+			        </table>
+			    </div>
+    </div>
+	
+	
+	
+    <div
+    class="modal fade" id="modalEmpleado" data-backdrop="static" data-keyboard="false" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true" style="display: none;">
+        <div class="modal-dialog modal-dialog-centered modal-lg">
+            <div class="modal-content">
+                <div class="modal-header bg-blue-darker">
+                    <h4 class="modal-title text-black">Empleado</h4>
+                </div>
+                <div class="modal-body">
+                    <form id="idRegistra">
+                        <!-- cambia el hidden-->
+                        <input type="hidden" value="0" name="codigo" id="idCodigo">
+                        <div class="form-group">
+                            <label for="idNombre"><b>Monto : S/</b></label>
+                            <LAbel id="monto"></LAbel>
+                        </div>
+
+
+                        <div class="form-group">
+                            <label for="fechaSeleccionada"><b>Fecha de Inicio:</b></label>
+                            <!-- Campo de entrada de fecha con valor por defecto -->
+                            <input type="date" id="fechaInicioInput" value="">
+                        </div>
+                    
+                        <div class="form-group">
+                            <!-- Etiqueta para mostrar la fecha seleccionada -->
+                            <label for="fechaFin"><b>Fecha de Fin:</b></label>
+                            <label id="fechaFinLabel"></label>
+                        </div>
+                        
+
+
+                        <div class="form-group">
+                            <label for="idCargo"><b>Dias : </b></label>
+                            <label id="idLoginLabel"></label>
+                        </div>
+
+
+
+                        <div class="form-group">
+                            <label for="idTelefono"><b>Pago Diario : S/</b></label>
+                            <label id="pagoDiario"><b></b></label>
+                        </div>
+                        <div class="col-md-12 text-center mt-4">
+                            <button type="button" id="Guardar" class="btn btn-primary"><i class="fas fa-save"></i> Registrar</button>
+                            <button type="button" id="btn-cerrar" class="btn btn-danger" data-dismiss="modal"><i class="fas fa-undo-alt"></i> Cancelar</button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+
+	<script>
+		document.addEventListener("DOMContentLoaded", function() {
+		    // Captura el evento clic en los enlaces de la tabla
+		    document.querySelectorAll('#tableMedicamentos .btn-nuevo').forEach(function(enlace) {
+		        enlace.addEventListener('click', function(evento) {
+		            evento.preventDefault(); // Evita que se siga el enlace
+		
+		            // Obtiene el valor del precio desde el texto del enlace
+		            var monto = this.textContent.trim();
+		
+		            // Actualiza el valor del campo 'Monto' en el modal con el precio capturado
+		            document.getElementById('monto').textContent = monto;
+		
+		            // Abre el modal
+		            $('#modalEmpleado').modal('show');
+		        });
+		    });
+		});
+
+	</script>
+	
+	
+
+    <!-- postt en formulario -->
+    <script>
+        document.addEventListener("DOMContentLoaded", function() {
+    const guardarButton = document.getElementById('Guardar');
+
+    guardarButton.addEventListener('click', function() {
+        const monto = parseFloat(document.getElementById('monto').textContent.replace("S/", "").trim());
+        const fechaInicio = document.getElementById('fechaInicioInput').value;
+        const fechaFin = document.getElementById('fechaFinLabel').textContent.trim();
+        console.log(fechaFin)
+        const dias = parseInt(document.getElementById('idLoginLabel').textContent);
+        const pagoDiario = parseFloat(document.getElementById('pagoDiario').textContent.replace("Pago Diario: S/", "").trim());
+
+        // Envío de datos al backend mediante AJAX
+        $.ajax({
+            url: '/prestamos',
+            method: 'POST',
+            data: JSON.stringify({
+                monto: monto,
+                fechaInicio: fechaInicio,
+                fechaFin: fechaFin,
+                dias: dias,
+                pagoPorDia: pagoDiario.toFixed(2) // Redondea el pago diario a dos decimales
+            }),
+            contentType: 'application/json',
+            success: function(response) {
+                // Manejo de la respuesta del backend
+                console.log('Datos enviados al backend con éxito:', response);
+            },
+            error: function(xhr, status, error) {
+                // Manejo de errores
+                console.error('Error al enviar datos al backend:', error);
+            }
+        });
+    });
+});
+
+    </script>
+
+
+
+    <!-- Aqui se valida la fecha no sabado ni domingo -->
+
+    <script>
+    document.addEventListener("DOMContentLoaded", function() {
+        const fechaInicioInput = document.getElementById('fechaInicioInput');
+        const fechaFinLabel = document.getElementById('fechaFinLabel');
+    
+        fechaInicioInput.addEventListener('change', function() {
+            const selectedDate = new Date(this.value);
+            const dias = parseInt(document.getElementById('idLoginLabel').textContent);
+            
+            if (!isNaN(dias)) {
+                let i = 0;
+                let diasHabiles = 0; // Inicializamos el contador de días hábiles a agregar
+                
+                // Si la fecha de inicio es sábado o domingo, avanzamos al siguiente día laborable
+                while (selectedDate.getDay() === 6 || selectedDate.getDay() === 0) {
+                    selectedDate.setDate(selectedDate.getDate() + 1);
+                }
+    
+                // Contamos el primer día hábil como parte de los días hábiles
+                diasHabiles++;
+    
+                // Iteramos para calcular los días hábiles restantes
+                while (i < dias - 1) { // Restamos 1 porque ya hemos contado el primer día hábil
+                    // Avanzamos un día
+                    selectedDate.setDate(selectedDate.getDate() + 1); 
+                    
+                    // Si el día resultante no es sábado (6) ni domingo (0), incrementamos el contador de días hábiles
+                    if (selectedDate.getDay() !== 6 && selectedDate.getDay() !== 0) {
+                        i++;
+                        diasHabiles++;
+                    }
+                }
+                
+                // Establecemos la nueva fecha sumando solo los días hábiles
+                const formattedDate = selectedDate.toISOString().split('T')[0];
+                fechaFinLabel.textContent = formattedDate;
+    
+                // Calcula la cantidad de días hábiles entre el monto seleccionado y la fecha de inicio
+                const montoSeleccionado = parseInt(document.getElementById('monto').textContent.replace("S/", "").trim());
+                const pagoDiario = montoSeleccionado / dias;
+                document.getElementById('pagoDiario').textContent = pagoDiario.toFixed(2); // Muestra el pago diario con dos decimales
+            } else {
+                fechaFinLabel.textContent = "Seleccione una cantidad de días válida.";
+                document.getElementById('pagoDiario').textContent = ""; // Borra el contenido si no hay días seleccionados
+            }
+        });
+    });
+    
+    </script>
+
+
+<!-- Envio datos al consola -->
+<script>
+
+    // Espera a que el DOM esté completamente cargado
+    document.addEventListener("DOMContentLoaded", function () {
+
+        // Agrega un evento de clic al botón "Registrar" del modal "Empleado"
+        var btnRegistrarEmpleado = document.getElementById("Guardar");
+        btnRegistrarEmpleado.addEventListener("click", function () {
+            // Obtén el monto, fecha de inicio, fecha de fin, y pago diario
+            var monto = document.getElementById("monto").innerText;
+            var fechaInicio = document.getElementById("fechaInicioInput").value;
+            var fechaFin = document.getElementById("fechaFinLabel").innerText;
+            var pagoDiario = document.getElementById("pagoDiario").innerText;
+            var dias = document.getElementById("idLoginLabel").innerText;
+            // Imprime la información de los días laborables y la información de los días de la tabla en la consola
+            console.log("Monto:", monto);
+            console.log("Fecha de inicio:", fechaInicio);
+            console.log("Fecha de fin:", fechaFin);
+            console.log("Pago diario:", pagoDiario);
+            console.log("Días:", dias);
+        });
+
+        // Oculta el modal "Empleado" inicialmente
+        $('#modalEmpleado').modal('hide');
+    });
+</script>
+
+
+
+
+<!-- Modal en pocas palabras -->
+    <script>
+        document.addEventListener("DOMContentLoaded", function() {
+            // Captura el evento clic en los enlaces de la tabla
+            document.querySelectorAll('#tableMedicamentos .btn-nuevo a').forEach(function(enlace) {
+                enlace.addEventListener('click', function(evento) {
+                    evento.preventDefault(); // Evita que se siga el enlace
+    
+                    // Muestra el modal para seleccionar la cantidad de días
+                    $('#modalCantidadDias').modal('show');
+                });
+            });
+    
+        });
+
+    </script>
+
+
+<!-- Captura el modal el monto exacto en el tr y td -->
+ <script>
+    // Captura el evento clic en los enlaces de la tabla
+    document.querySelectorAll('#tableMedicamentos .btn-nuevo a').forEach(function(enlace) {
+        enlace.addEventListener('click', function(evento) {
+            evento.preventDefault(); // Evita que se siga el enlace
+
+            // Obtiene el valor del TD seleccionado
+            var monto = this.textContent.trim();
+
+            // Actualiza el valor del campo 'Monto' en el modal con el monto seleccionado
+            document.getElementById('monto').textContent = monto;
+
+            // Abre el modal
+            $('#modalEmpleado').modal('show');
+        });
+    });
+
+
+// Muestra la cantidad exacta de los tr y td
+    document.addEventListener("DOMContentLoaded", function() {
+    var tableCells = document.querySelectorAll('#tableMedicamentos tbody tr');
+    tableCells.forEach(function(row) {
+        row.addEventListener('click', function() {
+            // Obtener la cantidad de días de la fila
+            var dias = this.cells[0].textContent;
+            
+            // Mostrar la cantidad de días en el label correspondiente
+            document.getElementById('idLoginLabel').textContent = dias;
+        });
+    });
+});
+</script>
+
+ 
+    <!-- fin index js-->
+ <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+       <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.6.0/dist/js/bootstrap.bundle.min.js"
+           integrity="sha384-Piv4xVNRyMGpqkS2by6br4gNJ7DXjqk09RmUpJ8jgGtD7zP9yug3goQfGII0yAns"
+           crossorigin="anonymous"></script>
+       <script src="https://cdn.bootcdn.net/ajax/libs/bootstrap-validator/0.5.3/js/bootstrapValidator.js"></script>
+       <script th:src="@{/resources/datepicker/bootstrap-datepicker.js}"></script>
+       <!-- <script src="https://cdn.datatables.net/1.10.23/js/jquery.dataTables.min.js"></script> es el relleno de todo -->
+       <script src="https://cdn.datatables.net/1.10.23/js/dataTables.bootstrap4.min.js"></script>
+       <script src="https://kit.fontawesome.com/08aaa156fb.js" crossorigin="anonymous"></script>
+       <script src="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.js"></script>
+       <script src="https://kit.fontawesome.com/08aaa156fb.js" crossorigin="anonymous"></script>
+ 
+ 
+    <script>
+        //asignar evento click a todos los botones con clase "btn-editar"
+        $(document).on('click', ".btn-editar", function () {
+            //variable
+            var cod;
+            //almacenar el còdigo del medicamento segun el botòn editar que se seleccionò
+            cod=$(this).parents("tr").find("td")[0].innerHTML;
+            //funciòn get de JQUERY
+            $.get("/users/"+cod,function(response){
+                //asignar valores a las cajas usando el atributo "ID"
+            
+                
+                $("#idCodigo").val(response.id);
+                $("#idDni").val(response.dni);
+                $("#idNombre").val(response.nombre);
+                $("#idApellido").val(response.apellido);
+                $("#idLogin").val(response.login);
+                $("#idTelefono").val(response.telefono);
+                $("#idCorreo").val(response.email);
+                $("#idZona").val(response.idZona);
+                
+            })
+ 
+        })
+        
+        //asignar evento click al botòn con id "btn-cerrar"
+        $(document).on("click", "#btn-cerrar",function(){
+            //resetear el formulario
+            $("#idRegistra").trigger("reset");
+            //resetear validacion
+            $("#idRegistra").data("bootstrapValidator").resetForm(true);
+            
+        })
+ 
+ 
+ 
+        $('#tableMedicamentos').DataTable();
+        $(function () {
+            $('#usr1').datepicker({
+                'format': 'yyyy-mm-dd',
+                'autoclose': true
+            });
+ 
+        });
+        $('#usr1').on('changeDate show', function (e) {
+            $('#idRegistra').bootstrapValidator('revalidateField', $('#usr1'));
+        });
+ 
+ 
+    </script>
+ 
+
+</body>
+
+<!-- cREAR EL MODEL BIEN , INPUT LABEL -->
+
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@4.6.0/dist/js/bootstrap.bundle.min.js"
+          integrity="sha384-Piv4xVNRyMGpqkS2by6br4gNJ7DXjqk09RmUpJ8jgGtD7zP9yug3goQfGII0yAns"
+          crossorigin="anonymous"></script>
+</html>

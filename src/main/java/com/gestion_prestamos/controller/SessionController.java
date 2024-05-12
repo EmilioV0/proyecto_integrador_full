@@ -2,7 +2,6 @@ package com.gestion_prestamos.controller;
 
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 import org.springframework.http.MediaType;
@@ -32,12 +31,6 @@ public class SessionController {
     	this.userService = userService;
     	this.zonaService = zonaService;
     }
-	
-    /*
-	@GetMapping(value = "/login")
-	public String login() {
-		return "login";
-	} */
 
 	
 	@GetMapping(value = "/login")
@@ -87,3 +80,6 @@ public class SessionController {
 	
 	
 }
+	}
+}
+
